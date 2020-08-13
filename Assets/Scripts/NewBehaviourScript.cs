@@ -9,7 +9,7 @@ public class NewBehaviourScript : MonoBehaviour
     {
         Debug.Log("Commit");
         
-        Debug.Log("B");
+        Debug.Log("Commit Test22222");
     }
 
     // Update is called once per frame
