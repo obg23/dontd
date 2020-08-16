@@ -13,7 +13,7 @@ public class EnemySpawner : MonoBehaviour
     private List<Enemy> enemyList;      // 현재 맵에 존재하는 모든 적의 정보
 
     // 적의 생성과 삭제는 EnemySpawner에서 하기 때문에 Set은 필요 없다.
-    private List<Enemy> EnemyList => enemyList;
+    public List<Enemy> EnemyList => enemyList;
 
     private void Awake(){
 
