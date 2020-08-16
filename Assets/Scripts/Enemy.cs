@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private int         wayPointCount;      // 이동 경로 개수
-    private Transform[] wayPoints;          // 이동 경로 정보
-    private int         currentIdx = 0;     // 현재 목표지점 인덱스
-    private Movement2D  movement2D;         // 오브젝트 이동 제어
+    private int             wayPointCount;      // 이동 경로 개수
+    private Transform[]     wayPoints;          // 이동 경로 정보
+    private int             currentIdx = 0;     // 현재 목표지점 인덱스
+    private Movement2D      movement2D;         // 오브젝트 이동 제어
+    private EnemySpawner    enemySpawner;       // 적의 삭제를 본인이 하지 않고 EnemySpawner에서 삭제
 
     /*
-     * @param wayPoint : 
+     * @param wayPoints
     */
-    public void Setup(Transform[] wayPoints){
+    public void Setup(EnemySpawner enemySpawner, Transform[] wayPoints){
+
         movement2D = GetComponent<Movement2D>();
+
+        this.enemySpawner = enemySpawner;
 
         // 적 이동 경로 WayPoints 정보 설정
         wayPointCount   = wayPoints.Length;
@@ -65,8 +69,16 @@ public class Enemy : MonoBehaviour
         // 현재 위치가 마지막 wayPoints일 경우
         else{
             //적 오브젝트 삭제
-            Destroy(gameObject);
+            // Destroy(gameObject);
+            OnDie();
+
         }
+    }
+
+    public void OnDie(){
+
+        // 사망한 적을 EnemySpawner에서 삭제
+        enemySpawner.DestoryEnemy(this);
     }
 }
 
