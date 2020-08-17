@@ -1628,7 +1628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 4961744859040401445, guid: 53b08c6945202784682f6aa7b782e884, type: 3}
-  spwanTime: 0.1
+  spwanTime: 0.3
   wayPoints:
   - {fileID: 775531969}
   - {fileID: 1145510982}
