@@ -7,16 +7,19 @@ public enum WeaponState {SearchTarget = 0, AttackToTarget}
 public class TowerWeapon : MonoBehaviour
 {
     [SerializeField]
-    private GameObject      projectilePrefab;                       //발사체 prefab
+    private GameObject      projectilePrefab;                               //발사체 prefab
     [SerializeField]
-    private Transform       spawnPoint;                             // 발사체 생성 위치
+    private Transform       spawnPoint;                                     // 발사체 생성 위치
     [SerializeField]
-    private float           attackRate = 0.5f;                      // 공격 속도
+    private float           attackRate;                                     // 공격 속도
     [SerializeField]
-    private float           attackRange = 2.0f;                     // 공격 범위
-    private WeaponState weaponState = WeaponState.SearchTarget;      // 타워 무기의 상태
-    private Transform       attackTarget = null;                    // 공격 대상
-    private EnemySpawner    enemySpawner;                           // 게임에 존재하는 적 정보 획등용
+    private float           attackRange;                                    // 공격 범위
+    [SerializeField]
+    private int             attackDamage;                                   // 타워 공격력
+    
+    private WeaponState     weaponState     = WeaponState.SearchTarget;     // 타워 무기의 상태
+    private Transform       attackTarget    = null;                         // 공격 대상
+    private EnemySpawner    enemySpawner;                                   // 게임에 존재하는 적 정보 획등용
 
     public void Setup(EnemySpawner enemySpawner){
         this.enemySpawner = enemySpawner;
@@ -109,12 +112,11 @@ public class TowerWeapon : MonoBehaviour
                 break;
             }
 
-
             // 3. 공격
             SpawnProjectile();
 
             // 4. attackRate(공격속도) 시간 만큼 대기
-            yield return new WaitForSeconds(attackRange);
+            yield return new WaitForSeconds(attackRate);
         }
 
     }
@@ -123,7 +125,7 @@ public class TowerWeapon : MonoBehaviour
         GameObject clone = Instantiate(projectilePrefab, spawnPoint.position, Quaternion.identity);
 
         // 생성된 발사체에게 공격대상(attackTarget) 정보 제공
-        clone.GetComponent<Projectile>().Setup(attackTarget);
+        clone.GetComponent<Projectile>().Setup(attackTarget, attackDamage); // @param Target, damage
     }
 
     private float GetDistance(Vector3 position){

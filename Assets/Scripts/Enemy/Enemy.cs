@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnemyDestroyType {Kill = 0, Arrirve}
+
 public class Enemy : MonoBehaviour
 {
     private int             wayPointCount;      // 이동 경로 개수
@@ -70,16 +72,19 @@ public class Enemy : MonoBehaviour
         else{
             //적 오브젝트 삭제
             // Destroy(gameObject);
-            OnDie();
+            OnDie(EnemyDestroyType.Arrirve);
 
         }
     }
 
-    public void OnDie(){
+    public void OnDie(EnemyDestroyType type){
 
-        // 사망한 적을 EnemySpawner에서 삭제
-        enemySpawner.DestoryEnemy(this);
+        // EnemySpawner에서 리스트로 적 정보를 관리하기 때문에 Destory() 를 직접하지 않고
+        // EnemySpanwer에게 본인이 삭제될 때 필요한 처리를 하도록 DestroyEnemy() 함수 호출
+        enemySpawner.DestoryEnemy(type, this);
+
     }
+
 }
 
 /*

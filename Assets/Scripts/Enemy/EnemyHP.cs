@@ -5,11 +5,14 @@ using UnityEngine;
 public class EnemyHP : MonoBehaviour
 {
     [SerializeField]
-    private float maxHP;        // 최대 체력
-    private float currentHP;    // 현재 체력
-    private bool isDie = false; // 적이 사망 상태 여부
-    private Enemy enemy;
-    private SpriteRenderer spriteRenderer;
+    private float           maxHP;        // 최대 체력
+    private float           currentHP;    // 현재 체력
+    private bool            isDie = false; // 적이 사망 상태 여부
+    private Enemy           enemy;
+    private SpriteRenderer  spriteRenderer;
+
+    public float            MaxHP => maxHP;
+    public float            CurrentHp => currentHP;
 
     private void Awake()
     {
@@ -38,7 +41,7 @@ public class EnemyHP : MonoBehaviour
             isDie = true;
 
             //적 사망
-            enemy.OnDie();
+            enemy.OnDie(EnemyDestroyType.Kill);
         }
     }
 

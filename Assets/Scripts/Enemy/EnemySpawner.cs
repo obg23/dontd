@@ -5,12 +5,18 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
-    private GameObject  enemyPrefab;    // 적 Prefab
+    private GameObject  enemyPrefab;            // 적 Prefab
     [SerializeField]
-    private float       spwanTime;      // 적 생성 주기
+    private GameObject  enemyHPSliderPrefab;    // 적 체력을 나타내는 Slider UI prefab
     [SerializeField]
-    private Transform[] wayPoints;      // 현재 스테이지의 이동 경로
-    private List<Enemy> enemyList;      // 현재 맵에 존재하는 모든 적의 정보
+    private Transform   canvasTransform;        // UI를 표현하는 Canvas 오브젝트의 Transform
+    [SerializeField]
+    private float       spwanTime;              // 적 생성 주기
+    [SerializeField]
+    private Transform[] wayPoints;              // 현재 스테이지의 이동 경로
+    [SerializeField]
+    private PlayerHP    playerHP;
+    private List<Enemy> enemyList;              // 현재 맵에 존재하는 모든 적의 정보
 
     // 적의 생성과 삭제는 EnemySpawner에서 하기 때문에 Set은 필요 없다.
     public List<Enemy> EnemyList => enemyList;
@@ -35,13 +41,43 @@ public class EnemySpawner : MonoBehaviour
 
             enemyList.Add(enemy);                               // Enemy 리스트에 enemy 정보 저장
 
+            SpawnEnemyHPSlider(clone);
+
             yield return new WaitForSeconds(spwanTime);         // spawnTime 시간 동안 대기
         }
 
     }
 
+    private void SpawnEnemyHPSlider(GameObject enemy){
+
+        // 적 체력을 나타내는 Slider UI 생성
+        GameObject sliderClone = Instantiate(enemyHPSliderPrefab);
+
+        // Slider UI 오브젝트를 parent("Canvas" 오브젝트)의 자식으로 설정
+        // Tip. UI는 캔버스의 자식오브젝트로 설정되어 있어야 화면에 보인다
+        sliderClone.transform.SetParent(canvasTransform);
+
+        // 계층 설정으로 바뀐 크기를 다시 (1,1,1)로 설정
+        sliderClone.transform.localScale = Vector3.one;
+
+        // Slider UI가 쫓아다닐때 대상을 본인으로 설정
+        sliderClone.GetComponent<SliderPositionAutoSetter>().Setup(enemy.transform);
+
+        // Slider UI에 자신의 체력 정보를 표시하도록 설정
+        sliderClone.GetComponent<EnemyHPViewer>().Setup(enemy.GetComponent<EnemyHP>());
+
+
+    }
+
+
     // 적 삭제 function
-    public void DestoryEnemy(Enemy enemy){
+    public void DestoryEnemy(EnemyDestroyType type, Enemy enemy){
+
+        // 적이 목표지점까지 도착했을 때
+        if(type == EnemyDestroyType.Arrirve){
+            // 플레이어 체력 -1
+            playerHP.TakeDamage(1);
+        }
 
         // 사망하는 적 enemyList에서 삭제
         enemyList.Remove(enemy);
