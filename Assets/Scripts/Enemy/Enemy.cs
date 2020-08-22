@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour
     private Movement2D      movement2D;         // 오브젝트 이동 제어
     private EnemySpawner    enemySpawner;       // 적의 삭제를 본인이 하지 않고 EnemySpawner에서 삭제
 
+    [SerializeField]
+    private int             gold = 10;          // 적 사망 시 획득 가능한 골드
+
     /*
      * @param wayPoints
     */
@@ -71,6 +74,7 @@ public class Enemy : MonoBehaviour
         // 현재 위치가 마지막 wayPoints일 경우
         else{
             //적 오브젝트 삭제
+            gold = 0;
             // Destroy(gameObject);
             OnDie(EnemyDestroyType.Arrirve);
 
@@ -81,7 +85,7 @@ public class Enemy : MonoBehaviour
 
         // EnemySpawner에서 리스트로 적 정보를 관리하기 때문에 Destory() 를 직접하지 않고
         // EnemySpanwer에게 본인이 삭제될 때 필요한 처리를 하도록 DestroyEnemy() 함수 호출
-        enemySpawner.DestoryEnemy(type, this);
+        enemySpawner.DestoryEnemy(type, this, gold);
 
     }
 
