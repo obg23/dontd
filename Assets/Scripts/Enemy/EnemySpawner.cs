@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject  enemyPrefab;            // 적 Prefab
+    // [SerializeField]
+    // private GameObject  enemyPrefab;            // 적 Prefab
     [SerializeField]
     private GameObject  enemyHPSliderPrefab;    // 적 체력을 나타내는 Slider UI prefab
     [SerializeField]
     private Transform   canvasTransform;        // UI를 표현하는 Canvas 오브젝트의 Transform
-    [SerializeField]
-    private float       spwanTime;              // 적 생성 주기
+    // [SerializeField]
+    // private float       spwanTime;              // 적 생성 주기
     [SerializeField]
     private Transform[] wayPoints;              // 현재 스테이지의 이동 경로
     [SerializeField]
     private PlayerHP    playerHP;
     [SerializeField]
     private PlayerGold  playerGold;             // 플레이어 골드 컴포넌트
+
+    private Wave        currentWave;            // 현재 웨이브 정보
+
     private List<Enemy> enemyList;              // 현재 맵에 존재하는 모든 적의 정보
 
     // 적의 생성과 삭제는 EnemySpawner에서 하기 때문에 Set은 필요 없다.
@@ -29,23 +32,48 @@ public class EnemySpawner : MonoBehaviour
         enemyList = new List<Enemy>();
 
         //적 생성 코루틴 함수 호출
+        // StartCoroutine("SpawnEnemy");
+    }
+
+    public void StartWave(Wave wave)
+    {
+        // 매개변수로 받아온 웨이브 정보 저장
+        currentWave = wave;
+
+        // 현재 웨이브 시작
         StartCoroutine("SpawnEnemy");
     }
 
     private IEnumerator SpawnEnemy(){
 
-        while(true){
+        // 현재 웨이브에서 생성한 적 숫자
+        int spawnEnemyCount = 0;
 
-            GameObject clone    = Instantiate(enemyPrefab);     // 적 오브젝트 생성
-            Enemy      enemy    = clone.GetComponent<Enemy>();  // 방금 생성된 적의 Enemy 컴포넌트
+        // while(true){
+            
+        // 현재 웨이브에서 생성되어야 하는 적의 숫자만큼 적을 생성하고 코루틴 종료
+        while(spawnEnemyCount < currentWave.maxEnemyCount){
+            // GameObject clone    = Instantiate(enemyPrefab);     // 적 오브젝트 생성
+            // Enemy      enemy    = clone.GetComponent<Enemy>();  // 방금 생성된 적의 Enemy 컴포넌트
 
+            // 웨이브에 등장하는 적의 종류가 여러 종류일 때 임의의 적이 등장하도록 설정하고, 적 오브젝트 생성
+            int             enemyIdx    = Random.Range(0, currentWave.enemyPrefabs.Length);
+            GameObject      clone       = Instantiate(currentWave.enemyPrefabs[enemyIdx]);
+            Enemy           enemy       = clone.GetComponent<Enemy>();  // clone Enemy 컴포넌트
+
+            // this 는 나 자신 (자신의 EnemySpawner 정보)
             enemy.Setup(this, wayPoints);                       // wayPoint 정보를 매개변수로 Setup() 호출
-
             enemyList.Add(enemy);                               // Enemy 리스트에 enemy 정보 저장
 
             SpawnEnemyHPSlider(clone);
 
-            yield return new WaitForSeconds(spwanTime);         // spawnTime 시간 동안 대기
+            spawnEnemyCount++;
+
+            // yield return new WaitForSeconds(spwanTime);         // spawnTime 시간 동안 대기
+
+            // 각 웨이브마다 spawnTime이 다를 수 있기 때문에 현재 웨이브(currentWave)의 spawnTime 사용
+            yield return new WaitForSeconds(currentWave.spawnTime);
+
         }
 
     }
