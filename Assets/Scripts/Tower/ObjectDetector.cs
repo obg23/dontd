@@ -6,6 +6,9 @@ public class ObjectDetector : MonoBehaviour
 {
     [SerializeField]
     private TowerSpanwer    towerSpanwer;
+    [SerializeField]
+    private TowerDataViewer towerDataViewer;
+
     private Camera          mainCamera;
     private Ray             ray;
     private RaycastHit      hit;
@@ -35,6 +38,10 @@ public class ObjectDetector : MonoBehaviour
 
                     // 타워 생성 : SpawnTower() 호출
                     towerSpanwer.SpawnTower(hit.transform);
+                }
+                // 타워를 선택하면 해당 타워 정보를 출력하는 함수 호출
+                else if(hit.transform.CompareTag("Tower")){
+                    towerDataViewer.OnPanel();
                 }
             }
 

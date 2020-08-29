@@ -2571,6 +2571,7 @@ GameObject:
   - component: {fileID: 427381548}
   - component: {fileID: 427381550}
   - component: {fileID: 427381549}
+  - component: {fileID: 427381551}
   m_Layer: 5
   m_Name: PanelTower
   m_TagString: Untagged
@@ -2640,6 +2641,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 427381547}
   m_CullTransparentMesh: 0
+--- !u!114 &427381551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427381547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f702236b11055f64285e049fa0f6413f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &432597249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8220,6 +8233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerSpanwer: {fileID: 140447881}
+  towerDataViewer: {fileID: 427381551}
 --- !u!4 &1713561889
 Transform:
   m_ObjectHideFlags: 0

@@ -23,15 +23,17 @@ public class TowerSpanwer : MonoBehaviour
         // 타일 선택 여부
         if(tile.IsBuildTower){ return; }
 
+        // 타워 건설 여부 : true
+        tile.IsBuildTower = true;
+        playerGold.CurrentGold -= towerBuildGold;   // 타워 가격만큼 playerGold 차감
+
         // 선택한 타일 위치에 타워 생성
-        GameObject clone =  Instantiate(towerPrefab, tileTransform.position, Quaternion.identity);
+        Vector3 position = tileTransform.position + Vector3.back;
+        GameObject clone =  Instantiate(towerPrefab, position, Quaternion.identity);
 
         // 타워 무기에 enemySpawner 정보 전달
         clone.GetComponent<TowerWeapon>().Setup(enemySpawner);
 
-        // 타워 건설 여부 : true
-        tile.IsBuildTower = true;
-        playerGold.CurrentGold -= towerBuildGold;   // 타워 가격만큼 playerGold 차감
 
     }
 
