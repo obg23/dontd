@@ -110,8 +110,11 @@ public class EnemySpawner : MonoBehaviour
         }
         //적을 처치시
         else if(type == EnemyDestroyType.Kill){
-            // 골드 획득
+            // =========== 골드 획득 ===========
+
             playerGold.CurrentGold += gold;
+            
+            // =========== 골드 획득 ===========
         }
 
         // 사망하는 적 enemyList에서 삭제
