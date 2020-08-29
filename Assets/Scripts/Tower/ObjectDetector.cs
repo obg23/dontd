@@ -41,7 +41,7 @@ public class ObjectDetector : MonoBehaviour
                 }
                 // 타워를 선택하면 해당 타워 정보를 출력하는 함수 호출
                 else if(hit.transform.CompareTag("Tower")){
-                    towerDataViewer.OnPanel();
+                    towerDataViewer.OnPanel(hit.transform);
                 }
             }
 

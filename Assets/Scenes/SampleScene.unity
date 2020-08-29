@@ -2653,6 +2653,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f702236b11055f64285e049fa0f6413f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  imageTower: {fileID: 451890673}
+  textDamage: {fileID: 532452443}
+  textRate: {fileID: 1904222436}
+  textRange: {fileID: 295595235}
+  textLevel: {fileID: 323743775}
 --- !u!1001 &432597249
 PrefabInstance:
   m_ObjectHideFlags: 0

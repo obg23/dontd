@@ -17,9 +17,16 @@ public class TowerWeapon : MonoBehaviour
     [SerializeField]
     private int             attackDamage;                                   // 타워 공격력
     
+    private int             level = 0;
+
     private WeaponState     weaponState     = WeaponState.SearchTarget;     // 타워 무기의 상태
     private Transform       attackTarget    = null;                         // 공격 대상
     private EnemySpawner    enemySpawner;                                   // 게임에 존재하는 적 정보 획등용
+
+    public float    Damage => attackDamage;
+    public float    Rate   => attackRate;
+    public float    Range  => attackRange;
+    public float    Level  => level + 1;
 
     public void Setup(EnemySpawner enemySpawner){
         this.enemySpawner = enemySpawner;
