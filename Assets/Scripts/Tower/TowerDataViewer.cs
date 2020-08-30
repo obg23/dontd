@@ -55,9 +55,9 @@ public class TowerDataViewer : MonoBehaviour
     private void UpdateTowerData(){
 
         textDamage.text = "Damage : " + currentTower.Damage;
-        textRange.text  = "Rate : " + currentTower.Rate;
+        textRate.text  = "Rate : " + currentTower.Rate;
         textRange.text  = "Range : " + currentTower.Range;
-        textRange.text  = "Level : " + currentTower.Level;
+        textLevel.text  = "Level : " + currentTower.Level;
 
     }
 }

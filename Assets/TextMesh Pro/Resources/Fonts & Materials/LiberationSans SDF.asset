@@ -30,10 +30,10 @@ Material:
     - _GradientScale: 10
     - _MaskSoftnessX: 0
     - _MaskSoftnessY: 0
-    - _OutlineSoftness: 0
+    - _OutlineSoftness: 0.57
     - _OutlineWidth: 1
     - _PerspectiveFilter: 0.875
-    - _ScaleRatioA: 0.41142857
+    - _ScaleRatioA: 0.3263826
     - _ScaleRatioB: 1
     - _ScaleRatioC: 0
     - _ScaleX: 1
